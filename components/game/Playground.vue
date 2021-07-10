@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import { Playground } from '../core/playground'
+import { GameWorld } from '../../core/game-world'
 
 export default {
   name: 'Playground',
   created () {
-    this.playground = new Playground()
+    this.playground = new GameWorld()
   },
   methods: {
     initWorld () {
@@ -38,5 +38,7 @@ export default {
 </script>
 
 <style scoped>
-
+#world{
+  width: 100%;
+}
 </style>

@@ -5,7 +5,7 @@ import { Camera, Object3D } from 'three';
 
 export type Optional<T> = undefined | T;
 
-export class Playground {
+export class GameWorld {
     private render: Optional<THREE.WebGLRenderer> = undefined;
     private scene: Optional<THREE.Scene> = undefined;
     private camera: Optional<THREE.Camera> = undefined;
@@ -28,7 +28,7 @@ export class Playground {
 
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0xa0a0a0);
-        scene.fog = new THREE.Fog(0xa0a0a0, 200, 1000);
+        scene.fog = new THREE.Fog(0xa0a0a0, 500, 1000);
 
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);

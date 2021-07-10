@@ -14,7 +14,7 @@
 import { ModelList } from '../core/constants'
 
 export default {
-  name: 'SideBar',
+  name: 'PrepareGame',
   methods:{
     onModelChange(event){
       const modelPath = event.target.value;
@@ -29,7 +29,6 @@ export default {
 
 <style scoped>
 .sidebar {
-  height: 100vh;
   background-color: #f1f1f1;
 }
 </style>
