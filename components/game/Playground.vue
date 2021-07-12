@@ -3,12 +3,12 @@
 </template>
 
 <script>
-import { GameWorld } from '../../core/game-world'
+import { DinoPreview } from '../../core/dino-preview'
 
 export default {
   name: 'Playground',
   created () {
-    this.playground = new GameWorld()
+    this.playground = new DinoPreview()
   },
   methods: {
     initWorld () {
@@ -30,7 +30,7 @@ export default {
     }
   },
   async mounted () {
-    await this.playground.loadModel('/fbx/Apatosaurus.fbx', 0.08)
+    await this.playground.loadModel('/fbx/Triceratops.fbx', 0.08)
     this.initWorld()
     window.addEventListener('resize', this.updateViewPort)
   }
