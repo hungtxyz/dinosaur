@@ -12,14 +12,16 @@
       <div class="choose-title">Background Color</div>
       <input type="color" value="#ffffff" class="form-control" />
       <div class="choose-title">Music</div>
-      <select v-on:change="onModelChange($event)" class="form-control">
-        <option value=0 >None</option>
-      </select>
+        <select v-on:change="onTrackChange($event)" class="form-control">
+          <template v-for="track in tracks">
+            <option :value="track.path" >{{ track.name }}</option>
+          </template>
+        </select>
     </div>
   </div>
 </template>
 <script>
-import { ModelList } from '../core/constants'
+import { ModelList, SOUND_TRACK } from '../core/constants'
 
 export default {
   name: 'PrepareGame',
@@ -27,10 +29,15 @@ export default {
     onModelChange(event){
       const modelPath = event.target.value;
       this.$emit("onModelChange", modelPath);
+    },
+    onTrackChange(event){
+      const trackPath = event.target.value;
+      console.log(trackPath);
     }
   },
   created () {
     this.models = ModelList
+    this.tracks = SOUND_TRACK
   }
 }
 </script>

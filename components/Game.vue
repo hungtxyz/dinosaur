@@ -10,7 +10,8 @@
             <Playground ref="pg"/>
         </div>
         <div class="button-wrapper">
-            <button type="button" class="btn btn-outline-secondary">Light</button>
+            <button type="button" class="btn"><i class="far fa-lightbulb"></i></button>
+            <button type="button" class="btn"><i class="fas fa-cloud"></i></button>
         </div>
     </div>
 </template>
