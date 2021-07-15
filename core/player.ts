@@ -11,6 +11,8 @@ export class Player {
     private keys_: any;
     public gameOver: boolean = false;
     private model_path:string;
+
+
     constructor(params: any, model_path:string) {
         this.model_path = model_path;
         this.position_ = new THREE.Vector3(0, 0, 0);
@@ -56,6 +58,7 @@ export class Player {
             this.mixer_ = new THREE.AnimationMixer(fbx);
 
             for (let i = 0; i < fbx.animations.length; ++i) {
+                console.log("animation: "+fbx.animations[i].name);
                 if (fbx.animations[i].name.includes('Run')) {
                     const clip = fbx.animations[i];
                     const action = this.mixer_.clipAction(clip);

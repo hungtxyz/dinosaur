@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
 import {Camera, Object3D, SpotLight} from 'three';
-import { GUI } from 'three/examples/jsm/libs/dat.gui.module';
+// @ts-ignore
+import {GUI} from 'three/examples/jsm/libs/dat.gui.module';
 
 
 export type Optional<T> = undefined | T;
@@ -17,6 +18,8 @@ export class DinoPreview {
     private readonly gameObjects: any[];
     private isPlaying = false;
     private clock: Optional<THREE.Clock> = undefined;
+    private cameraFolder: Optional<GUI> = undefined;
+    private lightFolder: Optional<GUI> = undefined;
 
     constructor() {
         this.setup();
@@ -33,12 +36,12 @@ export class DinoPreview {
         camera.position.set(100, 200, 500);
 
         scene.background = new THREE.Color(0xa0a0a0);
-        scene.fog = new THREE.Fog(0xa0a0a0, 500, 1000);
-        
+        scene.fog = new THREE.Fog(0xa0a0a0, 500, 1200);
+
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
-        
+
         const dirLight = new THREE.DirectionalLight(0xffffff);
         dirLight.position.set(0, 200, 100);
         dirLight.castShadow = true;
@@ -47,49 +50,48 @@ export class DinoPreview {
         dirLight.shadow.camera.left = -120;
         dirLight.shadow.camera.right = 120;
         scene.add(dirLight);
-        
+
         // ground
         const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({
             color: 0x999999,
             depthWrite: false
         }));
-        
+
         mesh.rotation.x = -Math.PI / 2;
         mesh.receiveShadow = true;
         scene.add(mesh);
-        
-        const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
-        
+
+        const grid = new THREE.GridHelper(2000, 20, 0xDF5E5E, 0xDF5E5E);
+
         (<any>grid.material).opacity = 0.2;
         (<any>grid.material).transparent = true;
-        
+
         scene.add(grid);
-        
+
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight - 100);
         renderer.shadowMap.enabled = true;
-        
-        const gui = new GUI();
-        const cameraFolder = gui.addFolder("Camera");
-        cameraFolder.add(camera.position, 'x', -400, 800);
-        cameraFolder.add(camera.position, 'y', 0, 300);
-        cameraFolder.add(camera.position, 'z', -500, 1000);
-        cameraFolder.open();
-        // cameraFolder.hide();
 
-        const lightFolder = gui.addFolder("Direct Light");
-        lightFolder.add(dirLight, 'intensity', 0, 10);
-        lightFolder.add(dirLight.position, 'x', -5, 15);
-        lightFolder.add(dirLight.position, 'y', 0, 400);
-        lightFolder.add(dirLight.position, 'z', 0, 300);
+        const gui = new GUI();
+        this.cameraFolder = gui.addFolder("Camera");
+        this.cameraFolder.add(camera.position, 'x', -400, 800);
+        this.cameraFolder.add(camera.position, 'y', 0, 300);
+        this.cameraFolder.add(camera.position, 'z', -500, 1000);
+        this.cameraFolder.open();
+        // cameraFolder.hide();
+        this.lightFolder = gui.addFolder("Direct Light");
+        this.lightFolder.add(dirLight, 'intensity', 0, 10);
+        this.lightFolder.add(dirLight.position, 'x', -5, 15);
+        this.lightFolder.add(dirLight.position, 'y', 0, 400);
+        this.lightFolder.add(dirLight.position, 'z', 0, 300);
         const setColor = {color: 0xffffff};
-        lightFolder.addColor( setColor, 'color').onChange(() => {
-            dirLight.color.set( setColor.color );
+        this.lightFolder.addColor(setColor, 'color').onChange(() => {
+            dirLight.color.set(setColor.color);
         });
-        lightFolder.open();
+        this.lightFolder.open();
         // lightFolder.hide();
-        
+        // gui.remove();
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();
@@ -162,5 +164,21 @@ export class DinoPreview {
         requestAnimationFrame(() => {
             this.animate();
         });
+    }
+
+    public hideControl() {
+        this.cameraFolder?.hide();
+        this.lightFolder?.hide();
+    }
+
+    public removeF(k:boolean) {
+        if (this.scene)
+        {
+            if (k)
+                this.scene.fog = new THREE.Fog(0xa0a0a0, 500, 1200);
+            else
+                this.scene.fog = null;
+        }
+        return !k;
     }
 }

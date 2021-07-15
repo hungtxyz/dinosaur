@@ -18,7 +18,9 @@
           </template>
         </select>
     </div>
+
   </div>
+
 </template>
 <script>
 import { ModelList, SOUND_TRACK } from '../core/constants'
@@ -44,7 +46,7 @@ export default {
 
 <style scoped>
   hr {
-    margin-top: 0; 
+    margin-top: 0;
     width: 80%;
     border-style: none;
     border-top-style: dotted;
@@ -52,7 +54,7 @@ export default {
   }
 
   .header {
-    padding: 1rem 0rem; 
+    padding: 1rem 0rem;
     color: #125D98;
     text-align: center;
   }

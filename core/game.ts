@@ -3,6 +3,8 @@ import {OrbitControls} from "three/examples/jsm/controls/OrbitControls";
 import {Player} from './player';
 import {WorldManager} from './world';
 import {Background} from './background';
+// import {GUI} from "three/examples/jsm/libs/dat.gui.module";
+
 
 const _VS = `
 varying vec3 vWorldPosition;
@@ -131,6 +133,14 @@ export class GameWorld {
     private controls: OrbitControls;
 
     constructor(model_path: string) {
+
+
+        // const cameraFolder = gui.addFolder("Camera");
+        // cameraFolder.add(camera.position, 'x', -400, 800);
+        // cameraFolder.add(camera.position, 'y', 0, 300);
+        // cameraFolder.add(camera.position, 'z', -500, 1000);
+        // cameraFolder.open();
+        // cameraFolder.hide();
 
         this.model_path = model_path;
         // overwrite shadowmap code
