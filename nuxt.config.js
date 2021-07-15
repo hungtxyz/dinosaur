@@ -26,7 +26,8 @@ export default {
         ],
         script: [
             {src: 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'},
-            {src: 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js'}
+            {src: 'https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js'},
+            {src: "https://kit.fontawesome.com/240b4639c5.js"}
         ]
     },
 

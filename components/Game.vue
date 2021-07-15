@@ -2,12 +2,16 @@
     <div id="game-container" class="row" >
         <div class="col-2 pl-0 pr-0 shadow character-selection-wrapper" :class="play ? 'hide' : ''">
             <PrepareGame v-on:onModelChange="onModelChange"/>
-            <div>
+            <div style="text-align: center; margin-top: 3rem;">
                 <button type="button" class="btn btn-primary" v-on:click="play=true" id="btn" @click="startGame()">Play game</button>
             </div>
         </div>
         <div class="col-10 pl-0 pr-0">
             <Playground ref="pg"/>
+        </div>
+        <div class="button-wrapper">
+            <button type="button" class="btn"><i class="far fa-lightbulb"></i></button>
+            <button type="button" class="btn"><i class="fas fa-cloud"></i></button>
         </div>
     </div>
 </template>
@@ -49,6 +53,15 @@ export default {
 .character-selection-wrapper {
     z-index: 1000;
     transition: margin-left ease .3s;
+}
+
+.button-wrapper {
+    display: block;
+    position: fixed;
+    align-items: center;
+    top: 2rem;
+    left: 20rem;
+    z-index: 999999;
 }
 
 .character-selection-wrapper.hide {

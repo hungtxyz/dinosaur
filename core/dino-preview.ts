@@ -1,7 +1,9 @@
 import * as THREE from 'three';
 import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls';
 import {FBXLoader} from 'three/examples/jsm/loaders/FBXLoader';
-import {Camera, Object3D} from 'three';
+import {Camera, Object3D, SpotLight} from 'three';
+import { GUI } from 'three/examples/jsm/libs/dat.gui.module';
+
 
 export type Optional<T> = undefined | T;
 
@@ -24,17 +26,19 @@ export class DinoPreview {
     }
 
     private setup() {
+
+        const scene = new THREE.Scene();
+
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
         camera.position.set(100, 200, 500);
 
-        const scene = new THREE.Scene();
         scene.background = new THREE.Color(0xa0a0a0);
         scene.fog = new THREE.Fog(0xa0a0a0, 500, 1000);
-
+        
         const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444);
         hemiLight.position.set(0, 200, 0);
         scene.add(hemiLight);
-
+        
         const dirLight = new THREE.DirectionalLight(0xffffff);
         dirLight.position.set(0, 200, 100);
         dirLight.castShadow = true;
@@ -43,29 +47,49 @@ export class DinoPreview {
         dirLight.shadow.camera.left = -120;
         dirLight.shadow.camera.right = 120;
         scene.add(dirLight);
-
+        
         // ground
         const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2000, 2000), new THREE.MeshPhongMaterial({
             color: 0x999999,
             depthWrite: false
         }));
-
+        
         mesh.rotation.x = -Math.PI / 2;
         mesh.receiveShadow = true;
         scene.add(mesh);
-
+        
         const grid = new THREE.GridHelper(2000, 20, 0x000000, 0x000000);
-
+        
         (<any>grid.material).opacity = 0.2;
         (<any>grid.material).transparent = true;
-
+        
         scene.add(grid);
-
+        
         const renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight - 100);
         renderer.shadowMap.enabled = true;
+        
+        const gui = new GUI();
+        const cameraFolder = gui.addFolder("Camera");
+        cameraFolder.add(camera.position, 'x', -400, 800);
+        cameraFolder.add(camera.position, 'y', 0, 300);
+        cameraFolder.add(camera.position, 'z', -500, 1000);
+        cameraFolder.open();
+        // cameraFolder.hide();
 
+        const lightFolder = gui.addFolder("Direct Light");
+        lightFolder.add(dirLight, 'intensity', 0, 10);
+        lightFolder.add(dirLight.position, 'x', -5, 15);
+        lightFolder.add(dirLight.position, 'y', 0, 400);
+        lightFolder.add(dirLight.position, 'z', 0, 300);
+        const setColor = {color: 0xffffff};
+        lightFolder.addColor( setColor, 'color').onChange(() => {
+            dirLight.color.set( setColor.color );
+        });
+        lightFolder.open();
+        // lightFolder.hide();
+        
         const controls = new OrbitControls(camera, renderer.domElement);
         controls.target.set(0, 0, 0);
         controls.update();

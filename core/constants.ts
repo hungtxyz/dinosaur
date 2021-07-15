@@ -48,3 +48,14 @@ export enum TEX_PACK {
     PALM_TREE = "/resources/DesertPack/Blend/Textures/PalmTree.png",
     GROUND = "/resources/DesertPack/Blend/Textures/Ground.glb",
 }
+
+export const SOUND_TRACK = [
+    {
+        name: "None",
+        path: ""
+    },
+    {
+        name: "Light it up",
+        path: "/resouces/sound/Light_It_Up.mp3"
+    }
+]
