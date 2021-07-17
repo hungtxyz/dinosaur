@@ -9,14 +9,7 @@
           <option :value="model.path">{{ model.name }}</option>
         </template>
       </select>
-      <div class="choose-title">Background Color</div>
-      <input type="color" value="#ffffff" class="form-control" />
-      <div class="choose-title">Music</div>
-        <select v-on:change="onTrackChange($event)" class="form-control">
-          <template v-for="track in tracks">
-            <option :value="track.path" >{{ track.name }}</option>
-          </template>
-        </select>
+
     </div>
 
   </div>
