@@ -27,7 +27,7 @@ export default {
     name: 'Game.vue',
     created() {
         this.model = '/fbx/Triceratops.fbx';
-        this.ani = 'Run'
+        this.ani = 'Jump'
         this.updateModelPath(this.model);
     },
     data: () => {

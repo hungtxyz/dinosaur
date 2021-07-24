@@ -40,7 +40,7 @@ export default {
 
     },
     async mounted() {
-        await this.playground.loadModel('/fbx/Triceratops.fbx', 0.08, 'Run')
+        await this.playground.loadModel('/fbx/Triceratops.fbx', 0.08, 'Jump')
         this.initWorld()
         window.addEventListener('resize', this.updateViewPort)
 
