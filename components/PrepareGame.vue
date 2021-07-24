@@ -1,64 +1,69 @@
 <template>
-  <div class="sidebar">
-    <h3 class="header">Final Project</h3>
-    <hr>
-    <div>
-      <div class="choose-title">Select model</div>
-      <select v-on:change="onModelChange($event)" class="form-control">
-        <template v-for="model in models">
-          <option :value="model.path">{{ model.name }}</option>
-        </template>
-      </select>
+    <div class="sidebar">
+        <h3 class="header">Final Project</h3>
+        <hr>
+        <div>
+            <div class="choose-title">Select model</div>
+            <select v-on:change="onModelChange($event)" class="form-control">
+                <template v-for="model in models">
+                    <option :value="model.path">{{ model.name }}</option>
+                </template>
+            </select>
+            <select v-on:change="onAnimationChange($event)" class="form-control">
+                <template v-for="ani in animations">
+                    <option :value="ani">{{ani}}</option>
+                </template>
+            </select>
+
+        </div>
 
     </div>
 
-  </div>
-
 </template>
 <script>
-import { ModelList, SOUND_TRACK } from '../core/constants'
+import {ModelList, ANIMATION} from '../core/constants'
 
 export default {
-  name: 'PrepareGame',
-  methods:{
-    onModelChange(event){
-      const modelPath = event.target.value;
-      this.$emit("onModelChange", modelPath);
+    name: 'PrepareGame',
+    methods: {
+        onModelChange(event) {
+            const modelPath = event.target.value;
+            this.$emit("onModelChange", modelPath);
+        },
+        onAnimationChange(event){
+            const animation = event.target.value;
+            this.$emit("onAnimationChange", animation);
+        }
     },
-    onTrackChange(event){
-      const trackPath = event.target.value;
-      console.log(trackPath);
+    created() {
+        this.models = ModelList
+        this.animations = ANIMATION;
     }
-  },
-  created () {
-    this.models = ModelList
-    this.tracks = SOUND_TRACK
-  }
 }
 </script>
 
 <style scoped>
-  hr {
+hr {
     margin-top: 0;
     width: 80%;
     border-style: none;
     border-top-style: dotted;
     border-color: grey;
-  }
+}
 
-  .header {
+.header {
     padding: 1rem 0rem;
     color: #125D98;
     text-align: center;
-  }
+}
 
-  .choose-title {
+.choose-title {
     color: #3C8DAD;
     text-align: center;
     padding: 0.5rem 1rem;
-  }
+}
 
-  .sidebar {
+.sidebar {
     background-color: #f1f1f1;
-  }
+}
 </style>

@@ -101,14 +101,25 @@ export class DinoPreview {
         this.render = renderer;
     }
 
-    public loadModel(modelPath: string, scale: number) {
+    public loadModel(modelPath: string, scale: number, animation: string) {
         return new Promise<void>((resolve) => {
             this.loader?.load(modelPath, (object) => {
                 object.name = modelPath;
                 object.scale.multiplyScalar(scale);
                 const mixer = new THREE.AnimationMixer(object);
-                const action = mixer.clipAction(object.animations[0]);
-                action.play();
+                for (let i = 0; i < object.animations.length; ++i) {
+                    console.log("animation: "+object.animations[i].name);
+                    if (object.animations[i].name.includes(animation)) {
+                        const clip = object.animations[i];
+                        const action = mixer.clipAction(clip);
+                        action.play();
+                    }
+                }
+                // const action = mixer.clipAction(object.animations[0]);
+                // for (let item in object.animations){
+                //     console.log(item)
+                // }
+                // action.play();
                 object.traverse(function (child) {
                     if ((<any>child).isMesh) {
                         child.castShadow = true;

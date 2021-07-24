@@ -49,7 +49,7 @@ export enum TEX_PACK {
     GROUND = "/resources/DesertPack/Blend/Textures/Ground.glb",
 }
 
-export const SOUND_TRACK = [
+export const    SOUND_TRACK = [
     {
         name: "None",
         path: ""
@@ -59,3 +59,12 @@ export const SOUND_TRACK = [
         path: "/resouces/sound/Light_It_Up.mp3"
     }
 ]
+export  const  ANIMATION = [
+    'Jump',
+    'Idle',
+    'Run',
+    'Walk',
+    'Attack',
+    'Death',
+]
+

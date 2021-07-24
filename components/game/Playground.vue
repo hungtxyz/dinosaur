@@ -23,12 +23,13 @@ export default {
             const w = $('#world').width()
             this.playground.updateViewport(w, window.innerHeight)
         },
-        changeModel(path) {
+        changeModel(path, animation) {
             (async () => {
                 this.playground.clearObjects()
-                await this.playground.loadModel(path, 0.08)
+                await this.playground.loadModel(path, 0.08, animation)
             })()
         },
+
         hideControl(){
             this.playground.hideControl();
 
@@ -39,7 +40,7 @@ export default {
 
     },
     async mounted() {
-        await this.playground.loadModel('/fbx/Triceratops.fbx', 0.08)
+        await this.playground.loadModel('/fbx/Triceratops.fbx', 0.08, 'Run')
         this.initWorld()
         window.addEventListener('resize', this.updateViewPort)
 

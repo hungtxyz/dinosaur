@@ -1,7 +1,7 @@
 <template>
     <div id="game-container" class="row">
         <div class="col-2 pl-0 pr-0 shadow character-selection-wrapper" :class="play ? 'hide' : ''">
-            <PrepareGame v-on:onModelChange="onModelChange"/>
+            <PrepareGame v-on:onModelChange="onModelChange" v-on:onAnimationChange="onAnimationChange"/>
             <div style="text-align: center; margin-top: 3rem;" ref="pg">
                 <button type="button" class="btn btn-primary" v-on:click="play=true" id="btn" @click="startGame()">Play
                     game
@@ -26,7 +26,9 @@ import {mapActions} from "vuex";
 export default {
     name: 'Game.vue',
     created() {
-        this.updateModelPath('/fbx/Triceratops.fbx');
+        this.model = '/fbx/Triceratops.fbx';
+        this.ani = 'Run'
+        this.updateModelPath(this.model);
     },
     data: () => {
         return {
@@ -40,10 +42,16 @@ export default {
             updateModelPath: 'updateModelPath'
         }),
         onModelChange(path) {
+            this.model = path;
             console.log("Parent got " + path);
             this.updateModelPath(path);
-            this.$refs.pg.changeModel(path)
+            this.$refs.pg.changeModel(path, this.ani)
         },
+        onAnimationChange(animation) {
+            this.ani = animation;
+            this.$refs.pg.changeModel(this.model, animation)
+        },
+
         startGame() {
             this.$router.push('/play');
             this.$refs.pg.hideControl();
